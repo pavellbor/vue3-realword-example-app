@@ -2,17 +2,17 @@
   <header>
     <nav class="navbar navbar-light">
       <div class="container">
-        <a class="navbar-brand" href="/">conduit</a>
+        <RouterLink class="navbar-brand" to="/">conduit</RouterLink>
         <ul class="nav navbar-nav pull-xs-right">
           <li class="nav-item">
             <!-- Add "active" class when you're on that page" -->
-            <a class="nav-link active" href="/">Home</a>
+            <RouterLink class="nav-link active" to="/">Home</RouterLink>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/login">Sign in</a>
+            <RouterLink class="nav-link" to="/login">Sign in</RouterLink>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/register">Sign up</a>
+            <RouterLink class="nav-link" to="/register">Sign up</RouterLink>
           </li>
         </ul>
       </div>

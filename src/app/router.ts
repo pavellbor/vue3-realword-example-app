@@ -1,12 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import Home from "../pages/Home.vue";
-import Login from "../pages/Login.vue";
-import Register from "../pages/Register.vue";
-import Settings from "../pages/Settings.vue";
-import ArticleEditor from "../pages/ArticleEditor.vue";
-import Article from "../pages/Article.vue";
-import Profile from "../pages/Profile.vue";
 import DefaultLayout from "../components/layouts/DefaultLayout.vue";
 
 const routes = [
@@ -14,30 +7,30 @@ const routes = [
     path: "/",
     component: DefaultLayout,
     children: [
-      { path: "", component: Home },
+      { path: "", component: () => import("../pages/Home.vue") },
       {
         path: "/login",
-        component: Login,
+        component: () => import("../pages/Login.vue"),
       },
       {
         path: "/register",
-        component: Register,
+        component: () => import("../pages/Register.vue"),
       },
       {
         path: "/profile",
-        component: Profile,
+        component: () => import("../pages/Profile.vue"),
       },
       {
         path: "/settings",
-        component: Settings,
+        component: () => import("../pages/Settings.vue"),
       },
       {
         path: "/editor",
-        component: ArticleEditor,
+        component: () => import("../pages/ArticleEditor.vue"),
       },
       {
         path: "/article",
-        component: Article,
+        component: () => import("../pages/Article.vue"),
       },
     ],
   },
