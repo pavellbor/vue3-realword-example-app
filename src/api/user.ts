@@ -26,6 +26,20 @@ class UserApi extends ApiClient {
     const { user: userData } = await this.get<{ user: User }>(`/user`);
     return userData;
   }
+
+  async updateUser(user: {
+    email?: string;
+    password?: string;
+    username?: string;
+    bio?: string;
+    image?: string;
+  }): Promise<User> {
+    const { user: userData } = await this.put<{ user: User }>(`/user`, {
+      user,
+    });
+
+    return userData;
+  }
 }
 
 export const userApi = new UserApi();

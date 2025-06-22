@@ -2,6 +2,6 @@ export type User = {
     email: string;
     token: string;
     username: string;
-    bio: string | null;
+    bio: string;
     image: string | null;
 }

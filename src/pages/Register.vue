@@ -3,13 +3,11 @@ import { ref } from "vue";
 import { useUserStore } from "../stores/user";
 import { useRouter } from "vue-router";
 import { userApi } from "../api/user";
-import { ApiError } from "../libs/apiClient";
 import ErrorMessages from "../components/sections/ErrorMessages.vue";
+import { useApiClient } from "../composables/useApiClient";
 
 const userStore = useUserStore();
 const router = useRouter();
-
-const isLoading = ref(false);
 
 const formData = ref({
   username: "",
@@ -17,23 +15,17 @@ const formData = ref({
   password: "",
 });
 
-const errors = ref<Record<string, string[]> | null>(null);
+const { callback, errors, isLoading } = useApiClient();
+
+const register = async () => {
+  const user = await userApi.register(formData.value);
+  userStore.setUser(user);
+  localStorage.setItem("token", user.token);
+  router.push("/");
+}
 
 const handleSubmit = async () => {
-  isLoading.value = true;
-  try {
-    const user = await userApi.register(formData.value);
-    userStore.setUser(user);
-    localStorage.setItem("token", user.token);
-    router.push("/");
-  } catch (error) {
-    console.log(error);
-    if (error instanceof ApiError) {
-      errors.value = error.errors;
-    }
-  } finally {
-    isLoading.value = false;
-  }
+  callback(register);
 };
 </script>
 

@@ -53,4 +53,16 @@ export class ApiClient {
       throw error;
     }
   }
+
+  protected async put<T>(path: string, data: any): Promise<T> {
+    try {
+      const { data: responseData } = await axios.put<T>(path, data);
+      return responseData;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        throw new ApiError(error.response?.data.errors);
+      }
+      throw error;
+    }
+  }
 }

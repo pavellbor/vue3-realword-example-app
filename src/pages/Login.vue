@@ -3,35 +3,28 @@ import { ref } from "vue";
 import { useUserStore } from "../stores/user";
 import { useRouter } from "vue-router";
 import { userApi } from "../api/user";
-import { ApiError } from "../libs/apiClient";
 import ErrorMessages from "../components/sections/ErrorMessages.vue";
+import { useApiClient } from "../composables/useApiClient";
 
 const userStore = useUserStore();
 const router = useRouter();
-
-const isLoading = ref(false);
 
 const formData = ref({
   email: "",
   password: "",
 });
 
-const errors = ref<Record<string, string[]> | null>(null);
+const { callback, errors, isLoading } = useApiClient();
+
+const login = async () => {
+  const user = await userApi.login(formData.value);
+  userStore.setUser(user);
+  localStorage.setItem("token", user.token);
+  router.push("/");
+}
 
 const handleSubmit = async () => {
-  isLoading.value = true;
-  try {
-    const user = await userApi.login(formData.value);
-    userStore.setUser(user);
-    localStorage.setItem("token", user.token);
-    router.push("/");
-  } catch (error) {
-    if (error instanceof ApiError) {
-      errors.value = error.errors;
-    }
-  } finally {
-    isLoading.value = false;
-  }
+  callback(login);
 };
 </script>
 
