@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import { TOKEN_KEY } from "../constants/api";
+import { useRouter } from "vue-router";
+import { useUserStore } from "../stores/user";
+
+const router = useRouter();
+const userStore = useUserStore();
+
+const logout = () => {
+  localStorage.removeItem(TOKEN_KEY);
+  userStore.setUser(null);
+  router.push("/");
+};
+</script>
+
 <template>
   <div class="settings-page">
     <div class="container page">
@@ -52,7 +67,7 @@
             </fieldset>
           </form>
           <hr />
-          <button class="btn btn-outline-danger">
+          <button class="btn btn-outline-danger" @click="logout">
             Or click here to logout.
           </button>
         </div>
